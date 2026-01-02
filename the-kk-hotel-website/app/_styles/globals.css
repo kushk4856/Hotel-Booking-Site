@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-1: #ffffff; /* white */
+  --color-2: #000000; /* black */
+
+  --color-3: #00000080;
+  --color-4: #ffffffe6;
+  --color-5: #ffffffcc;
+  --color-6: #ffffffb3;
+  --color-7: #ffffff99;
+  --color-8: #ffffff80;
+  --color-9: #ffffff66;
+  --color-10: #ffffff4d;
+  --color-11: #ffffff33;
+
+  --color-12: #00000026;
+  --color-13: #0000000d;
+
+  --color-14: #ffffff00; /* transparent */
+}
+
 /* @layer components {
   .spinner {
     margin: 3.2rem auto 1.6rem;

@@ -37,3 +37,5 @@ next-env.d.ts
 
 # ignored folders
 /starter
+/cursorrules
+/JOURNEY.md

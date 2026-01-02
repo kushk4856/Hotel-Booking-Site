@@ -1,5 +1,5 @@
-
 import Link from "next/link";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navigation() {
   return (
@@ -19,6 +19,9 @@ export default function Navigation() {
           <Link href="/account" className="hover:text-accent-400 transition-colors">
             Guest area
           </Link>
+        </li>
+        <li>
+          <ThemeToggle />
         </li>
       </ul>
     </nav>
