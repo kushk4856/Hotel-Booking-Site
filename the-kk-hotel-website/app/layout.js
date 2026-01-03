@@ -1,6 +1,6 @@
 import "./_styles/globals.css";
-import Header from "./components/Header";
-import { Providers } from "./components/Providers";
+import Header from "@/app/_components/Header";
+import { Providers } from "@/app/_components/Providers";
 import { Source_Serif_4, Jost } from "next/font/google";
 
 const serif = Source_Serif_4({
