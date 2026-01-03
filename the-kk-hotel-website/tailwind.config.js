@@ -22,10 +22,20 @@ module.exports = {
           900: "#182634",
           950: "#141C24",
         },
-        // User provided specific light mode colors
+        // Dark theme base colors
+        dark: {
+          bg: "#0a0a0f",
+          surface: "#1a1a22",
+          border: "#2a2a35",
+          muted: "#6b6b6b",
+        },
+        // Light theme base colors
         light: {
-          bg: "var(--color-13)",
-          text: "var(--color-2)",
+          bg: "#f5f0eb",
+          surface: "#ffffff",
+          border: "#e5ddd5",
+          text: "#3d3229",
+          muted: "#6b5c4c",
         },
         accent: {
           50: "#FAF5F0",

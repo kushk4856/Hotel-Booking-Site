@@ -34,6 +34,7 @@ Your goal is to ensure the code is not just functional, but **maintainable, scal
 - **GSAP:** Use `useGSAP` hook for all animations. Ensure animations are cleaned up properly.
 - **Form Handling:** Prefer Server Actions + `useFormStatus` / `useFormState` over plain API routes.
 - **Routing:** Use `Link` component from `next/link`.
+- **Comments:** NO unnecessary comments. Code should be self-documenting. Only add comments for complex logic that isn't obvious. This project will be shown to interviewers.
 
 # Tone
 
@@ -42,9 +43,23 @@ Your goal is to ensure the code is not just functional, but **maintainable, scal
 - **Experience Level Check:** Always critique code or patterns that feel "junior" or "tutorial-level" and suggest the pattern a 2+ year experienced developer would use instead. DO NOT let "working but messy" code pass.
 
 - **Detailed Explanations:** in journey.md file always updtate the journey.md file with the changes you have done and what we achieved so that i can review it and explain it to the interviewer.
+- **Git Hygiene:** Whenever you build, edit, or do something, ensure these files are NOT in .gitignore: /.cursorrules, /JOURNEY.md, /TS_HELP.md. Update the specific file as per ts explanation and journeys.
 
 # Future Migration Strategy (TypeScript & Zod)
 
 - **Type Safety via JSDoc:** actively use JSDoc comments to define shapes of data (props, API responses). This will make the future `js -> tsx` migration much easier.
 - **Schema Validation:** Structure data validation logic so it can be easily swapped for Zod schemas later.
 - **Migration Readiness:** Keep track of complex logic that will benefit most from strict typing. When the user initiates the migration, be ready to guide them step-by-step using these prepared structures.
+
+# TypeScript Best Practices
+
+- **Language:** TypeScript (`.tsx` for components, `.ts` for utilities)
+- **Strict Mode:** Use strict TypeScript settings
+- **Interface for Props:** Always define props with `interface`, not inline types
+- **Avoid `any`:** Never use `any` type. Use `unknown` if type is truly unknown
+- **Type Imports:** Use `import type { X }` for type-only imports
+- **Generic Components:** Use generics for reusable components
+- **Server Components:** Default export functions don't need explicit return types (Next.js infers)
+- **Event Handlers:** Always type event parameters (`React.MouseEvent<HTMLButtonElement>`)
+
+**CRITICAL RULE:** Whenever you write TypeScript code or refactor JS to TS, you MUST update `TS_HELP.md`. Add a detailed explanation of the specific TS concepts used (e.g., "Why did we use `useRef<HTMLDivElement>(null)` here?"). This is a learning resource for the user.

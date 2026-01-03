@@ -1,5 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# private files (not for public repo)
+
+
 # dependencies
 /node_modules
 /.pnp
@@ -33,9 +36,9 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
 
 # ignored folders
 /starter
-/cursorrules
 /JOURNEY.md
+/TS_HELP.md
+/.cursorrules

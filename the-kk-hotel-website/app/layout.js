@@ -1,6 +1,7 @@
 import "./_styles/globals.css";
 import Header from "@/app/_components/Header";
 import { Providers } from "@/app/_components/Providers";
+import MagneticCursor from "@/app/_components/MagneticCursor";
 import { Source_Serif_4, Jost } from "next/font/google";
 
 const serif = Source_Serif_4({
@@ -27,8 +28,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${sans.className} ${serif.variable} ${sans.variable} antialiased bg-light-bg text-light-text dark:bg-primary-950 dark:text-primary-100 min-h-screen flex flex-col transition-colors duration-300`}>
+      <body className={`${sans.className} ${serif.variable} ${sans.variable} antialiased bg-light-bg text-light-text dark:bg-dark-bg dark:text-white min-h-screen flex flex-col transition-colors duration-300`}>
         <Providers>
+          <MagneticCursor />
           <Header />
           <div className="flex-1 px-8 py-12 grid">
             <main className="max-w-7xl mx-auto w-full">{children}</main>
