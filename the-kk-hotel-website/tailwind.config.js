@@ -31,7 +31,7 @@ module.exports = {
         },
         // Light theme base colors
         light: {
-          bg: "#f5f0eb",
+          bg: "#0000000d",
           surface: "#ffffff",
           border: "#e5ddd5",
           text: "#3d3229",

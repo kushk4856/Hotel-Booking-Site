@@ -59,6 +59,6 @@
 } */
 @layer components {
   .wrapper {
-    @apply max-w-7xl mx-auto w-full px-8 py-12;
+    @apply max-w-7xl mx-auto w-full px-8;
   }
 }

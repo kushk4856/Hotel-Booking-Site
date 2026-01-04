@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect, useLayoutEffect, memo, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
@@ -22,6 +23,7 @@ const SlidingNavbar = memo(function SlidingNavbar({
   onNavigate,
   className = '',
 }) {
+  const pathname = usePathname();
   const [activeIndex, setActiveIndex] = useState(defaultActive);
   const [mounted, setMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,9 +33,9 @@ const SlidingNavbar = memo(function SlidingNavbar({
   const itemRefs = useRef([]);
   const mobileMenuRef = useRef(null);
   const hamburgerRef = useRef(null);
+  // We utilize theme for MagneticButton isLight prop if needed, 
+  // but main styling uses dark: classes for FOUC prevention.
   const { theme } = useTheme();
-
-  const isLight = mounted ? theme === 'light' : true;
 
   const updateIndicator = useCallback((index) => {
     const indicator = indicatorRef.current;
@@ -61,6 +63,18 @@ const SlidingNavbar = memo(function SlidingNavbar({
   const toggleMenu = useCallback(() => {
     setIsMenuOpen((prev) => !prev);
   }, []);
+
+  // Sync active index with current path
+  useEffect(() => {
+    const index = items.findIndex((item) => {
+      if (item.href === '/') return pathname === '/';
+      return pathname.startsWith(item.href);
+    });
+
+    if (index !== -1) {
+      setActiveIndex(index);
+    }
+  }, [pathname, items]);
 
   useEffect(() => {
     setMounted(true);
@@ -144,19 +158,16 @@ const SlidingNavbar = memo(function SlidingNavbar({
       className={`
         fixed top-0 left-0 right-0 z-50 w-full px-6 py-4 transition-all duration-300
         ${isScrolled 
-          ? (isLight ? 'bg-light-bg/80 backdrop-blur-md border-b border-light-border' : 'bg-dark-bg/80 backdrop-blur-md border-b border-dark-border')
+          ? 'bg-light-bg/80 dark:bg-dark-bg/80 backdrop-blur-md border-b border-light-border dark:border-dark-border' 
           : 'bg-transparent border-b border-transparent'
         }
         ${className}
       `}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="wrapper flex items-center justify-between">
         <Link
           href="/"
-          className={`
-            flex items-center gap-3 z-10 transition-colors duration-200
-            ${isLight ? 'text-light-text' : 'text-white'}
-          `}
+          className="flex items-center gap-3 z-10 transition-colors duration-200 text-light-text dark:text-white"
         >
           <Image
             src={logo}
@@ -178,22 +189,11 @@ const SlidingNavbar = memo(function SlidingNavbar({
           >
             <div
               ref={navRef}
-              className={`
-                relative flex items-center gap-1 p-1.5 rounded-full border
-                transition-all duration-300
-                ${isLight
-                  ? 'bg-light-bg border-light-border'
-                  : 'bg-dark-surface border-dark-border'
-                }
-              `}
+              className="relative flex items-center gap-1 p-1.5 rounded-full border transition-all duration-300 bg-dark-surface border-dark-border"
             >
               <div
                 ref={indicatorRef}
-                className={`
-                  absolute top-1.5 left-0 h-[calc(100%-0.75rem)] rounded-full
-                  shadow-sm transition-colors duration-300
-                  ${isLight ? 'bg-light-surface' : 'bg-dark-border'}
-                `}
+                className="absolute top-1.5 left-0 h-[calc(100%-0.75rem)] rounded-full shadow-sm transition-colors duration-300 bg-dark-border"
               />
 
               {items.map((item, index) => (
@@ -206,10 +206,8 @@ const SlidingNavbar = memo(function SlidingNavbar({
                     relative z-10 px-5 py-2 text-sm font-medium rounded-full
                     transition-colors duration-200 cursor-pointer
                     ${activeIndex === index
-                      ? isLight ? 'text-light-text' : 'text-white'
-                      : isLight
-                        ? 'text-light-muted hover:text-light-text'
-                        : 'text-dark-muted hover:text-white'
+                      ? 'text-white'
+                      : 'text-dark-muted hover:text-white'
                     }
                   `}
                 >
@@ -221,7 +219,7 @@ const SlidingNavbar = memo(function SlidingNavbar({
         </div>
 
         <div className="hidden lg:flex items-center gap-4">
-          <MagneticButton href={ctaHref} isLight={isLight}>
+          <MagneticButton href={ctaHref} isLight={theme === 'light' || !mounted}>
             {ctaText}
           </MagneticButton>
           <ThemeToggle />
@@ -233,15 +231,12 @@ const SlidingNavbar = memo(function SlidingNavbar({
           <button
             ref={hamburgerRef}
             onClick={toggleMenu}
-            className={`
-              flex flex-col justify-center items-center w-10 h-10 gap-1.5
-              ${isLight ? 'text-light-text' : 'text-white'}
-            `}
+            className="flex flex-col justify-center items-center w-10 h-10 gap-1.5 text-light-text dark:text-white"
             aria-label="Toggle menu"
           >
-            <span className={`block w-6 h-0.5 ${isLight ? 'bg-light-text' : 'bg-white'} origin-center`} />
-            <span className={`block w-6 h-0.5 ${isLight ? 'bg-light-text' : 'bg-white'}`} />
-            <span className={`block w-6 h-0.5 ${isLight ? 'bg-light-text' : 'bg-white'} origin-center`} />
+            <span className="block w-6 h-0.5 bg-black dark:bg-white origin-center" />
+            <span className="block w-6 h-0.5 bg-black dark:bg-white" />
+            <span className="block w-6 h-0.5 bg-black dark:bg-white origin-center" />
           </button>
         </div>
       </div>
@@ -249,15 +244,7 @@ const SlidingNavbar = memo(function SlidingNavbar({
       {/* Mobile Menu */}
       <div
         ref={mobileMenuRef}
-        className={`
-          hidden lg:hidden absolute top-full left-0 right-0 z-50
-          flex-col items-center gap-2 py-6 px-6
-          border-t transition-colors duration-300
-          ${isLight 
-            ? 'bg-light-bg border-light-border' 
-            : 'bg-dark-bg border-dark-border'
-          }
-        `}
+        className="hidden lg:hidden absolute top-full left-0 right-0 z-50 flex-col items-center gap-2 py-6 px-6 border-t transition-colors duration-300 bg-light-bg border-light-border dark:bg-dark-bg dark:border-dark-border"
         style={{ opacity: 0, transform: 'translateY(-10px)' }}
       >
         {items.map((item, index) => (
@@ -269,10 +256,8 @@ const SlidingNavbar = memo(function SlidingNavbar({
               w-full text-center py-3 text-lg font-medium rounded-lg
               transition-colors duration-200
               ${activeIndex === index
-                ? isLight ? 'text-light-text bg-light-surface' : 'text-white bg-dark-surface'
-                : isLight
-                  ? 'text-light-muted hover:text-light-text hover:bg-light-surface'
-                  : 'text-dark-muted hover:text-white hover:bg-dark-surface'
+                ? 'text-light-text bg-light-surface dark:text-white dark:bg-dark-surface'
+                : 'text-light-muted hover:text-light-text hover:bg-light-surface dark:text-dark-muted dark:hover:text-white dark:hover:bg-dark-surface'
               }
             `}
           >
@@ -282,14 +267,7 @@ const SlidingNavbar = memo(function SlidingNavbar({
         <Link
           href={ctaHref}
           onClick={() => setIsMenuOpen(false)}
-          className={`
-            w-full text-center mt-4 px-6 py-3 rounded-full text-sm font-medium
-            transition-all duration-300
-            ${isLight
-              ? 'bg-light-text text-white'
-              : 'bg-white text-dark-bg'
-            }
-          `}
+          className="w-full text-center mt-4 px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 bg-light-text text-white dark:bg-white dark:text-dark-bg"
         >
           {ctaText}
         </Link>

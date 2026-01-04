@@ -4,7 +4,7 @@ import MagneticButton from "@/app/_components/MagneticButton";
 
 export default function Home() {
   return (
-    <div className="h-full flex justify-center items-center">
+    <div className="h-full flex justify-center items-center relative">
       <Image
         src={bgImg}
         fill

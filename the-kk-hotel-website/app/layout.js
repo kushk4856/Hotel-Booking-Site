@@ -33,7 +33,7 @@ export default function RootLayout({ children }) {
           <MagneticCursor />
           <Header />
           <div className="flex-1 grid">
-            <main className="w-full">{children}</main>
+            <main className="w-full relative">{children}</main>
           </div>
         </Providers>
       </body>

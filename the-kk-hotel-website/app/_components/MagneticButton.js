@@ -86,7 +86,7 @@ const MagneticButton = memo(function MagneticButton({
       className={`
         relative inline-block px-6 py-2.5 rounded-2xl text-sm font-medium
         overflow-hidden cursor-pointer
-        ${isLight ? 'bg-light-text text-white' : 'bg-white text-dark-bg'}
+        ${isLight ? 'bg-dark-bg text-white' : 'bg-white text-dark-bg'}
         ${className}
       `}
     >
