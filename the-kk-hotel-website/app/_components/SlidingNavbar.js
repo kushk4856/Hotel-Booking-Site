@@ -25,6 +25,7 @@ const SlidingNavbar = memo(function SlidingNavbar({
   const [activeIndex, setActiveIndex] = useState(defaultActive);
   const [mounted, setMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navRef = useRef(null);
   const indicatorRef = useRef(null);
   const itemRefs = useRef([]);
@@ -87,6 +88,16 @@ const SlidingNavbar = memo(function SlidingNavbar({
     return () => clearTimeout(timer);
   }, [mounted, activeIndex, updateIndicator]);
 
+  // Scroll listener for glassmorphism
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial state
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Mobile menu animation
   useEffect(() => {
     if (!mounted || !mobileMenuRef.current) return;
@@ -131,8 +142,11 @@ const SlidingNavbar = memo(function SlidingNavbar({
   return (
     <nav
       className={`
-        w-full px-6 py-4 transition-colors duration-300 relative
-        ${isLight ? 'bg-light-bg' : 'bg-dark-bg'}
+        fixed top-0 left-0 right-0 z-50 w-full px-6 py-4 transition-all duration-300
+        ${isScrolled 
+          ? (isLight ? 'bg-light-bg/80 backdrop-blur-md border-b border-light-border' : 'bg-dark-bg/80 backdrop-blur-md border-b border-dark-border')
+          : 'bg-transparent border-b border-transparent'
+        }
         ${className}
       `}
     >

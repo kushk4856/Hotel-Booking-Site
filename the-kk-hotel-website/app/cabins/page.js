@@ -6,7 +6,7 @@ export default async function Page() {
   const data = await res.json();
 
   return (
-    <div>
+    <div className="wrapper">
       <h1>Cabins page</h1>
       <ul>
         {data.map((user) => (

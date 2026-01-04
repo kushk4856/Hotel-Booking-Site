@@ -57,3 +57,8 @@
   --rdp-background-color: theme('colors.accent.600') !important;
   margin: 0 !important;
 } */
+@layer components {
+  .wrapper {
+    @apply max-w-7xl mx-auto w-full px-8 py-12;
+  }
+}
