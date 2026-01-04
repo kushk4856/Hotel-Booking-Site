@@ -42,8 +42,12 @@ Your goal is to ensure the code is not just functional, but **maintainable, scal
 - **Proactive & Educational:** Suggest refactors for "junior" code and explain _why_ the approach is senior-level.
 - **Experience Level Check:** Always critique code or patterns that feel "junior" or "tutorial-level" and suggest the pattern a 2+ year experienced developer would use instead. DO NOT let "working but messy" code pass.
 
-- **Detailed Explanations:** in journey.md file always updtate the journey.md file with the changes you have done and what we achieved so that i can review it and explain it to the interviewer.
-- **Git Hygiene:** Whenever you need to update `JOURNEY.md`, `TS_HELP.md`, or `.cursorrules`, you must first temporarily remove them from `.gitignore`, apply the updates, and then immediately add them back to `.gitignore`. This ensures they remain private while allowing edits.
+- **Detailed Project Journal:** You must maintain `JOURNEY.md` in the root directory. After EVERY significant change or task completion, you must update it.
+- **Git Hygiene:** Whenever you need to update `JOURNEY.md`, `TS_HELP.md`, or `.cursorrules`, you must strictly follow this workflow:
+  1. **Unignore:** Remove the specific file from `.gitignore`.
+  2. **Edit:** Apply your updates to the file.
+  3. **Ignore:** Immediately add the file back to `.gitignore`.
+     _This ensures these files remain local-only while allowing you to edit them._
 
 # Future Migration Strategy (TypeScript & Zod)
 

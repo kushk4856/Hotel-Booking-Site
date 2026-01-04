@@ -41,6 +41,6 @@ yarn-error.log*
 /starter
 
 # private files (TEMPORARILY UNIGNORED FOR EDITING)
+/TS_HELP.md
 /.cursorrules
 /JOURNEY.md
-/TS_HELP.md
